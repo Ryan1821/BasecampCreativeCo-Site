@@ -3,24 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trail Talk | News, Fitness & Kids' Corner</title>
+    <title>Trail Talk | Basecamp Creative Co.</title>
+    
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // IMPORTANT: Global variables provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth;
+        setLogLevel('Debug'); // Enable logging for debugging
+
+        async function initFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Wait for auth to complete before loading articles
+                loadArticles();
+            } catch (error) {
+                console.error("Firebase Initialization or Auth Failed:", error);
+                // Optionally display an error message on the page
+            }
+        }
+        
+        // This function loads articles published within the last 48 hours
+        async function loadArticles() {
+            if (!db) {
+                console.error("Firestore not initialized.");
+                return;
+            }
+            
+            const articlesContainer = document.getElementById('dynamic-article-container');
+            if (!articlesContainer) return;
+            
+            // Calculate the timestamp for 48 hours ago
+            const twoDaysAgo = new Date();
+            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+            articlesContainer.innerHTML = `
+                <div class="flex justify-center items-center h-full">
+                    <p class="text-base-dark font-medium">Loading the latest trail news...</p>
+                </div>
+            `;
+            
+            try {
+                // Public Collection path: /artifacts/{appId}/public/data/articles
+                const articlesRef = collection(db, `artifacts/${appId}/public/data/articles`);
+                
+                // Query articles published AFTER the 48-hour mark
+                const q = query(articlesRef, where('timestamp', '>', twoDaysAgo));
+                const querySnapshot = await getDocs(q);
+
+                let articleHTML = '';
+
+                if (querySnapshot.empty) {
+                    // Fallback to display the static placeholder if no articles are current
+                    articleHTML = `
+                        <div class="bg-white rounded-xl shadow-lg p-6 transition duration-300 border-t-4 border-accent-copper">
+                            <span class="text-xs font-semibold text-accent-copper uppercase">Trail Update Archive</span>
+                            <h3 class="text-xl font-bold mt-2 text-deep-brown">Yosemite Half Dome Permit System - Archive</h3>
+                            <p class="mt-3 text-deep-brown text-sm">A comprehensive review of the new lottery system for Half Dome cables. Includes tips on the best months to apply, and essential gear you'll need.</p>
+                            <a href="#" class="mt-4 inline-flex items-center text-base-dark font-medium text-sm hover:text-accent-copper">
+                                Read Full Report &rarr;
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    // Display the newest article (since Firestore does not reliably order without an index)
+                    // We only display the first one found for the rotating content slot
+                    const articleDoc = querySnapshot.docs[0].data();
+                    
+                    articleHTML = `
+                        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 border-t-4 border-accent-copper">
+                            <span class="text-xs font-semibold text-accent-copper uppercase">${articleDoc.tag || 'Latest News'}</span>
+                            <h3 class="text-xl font-bold mt-2 text-deep-brown">${articleDoc.title || 'Untitled Article'}</h3>
+                            <p class="mt-3 text-deep-brown text-sm">${articleDoc.snippet || 'Check back soon for the latest trail news!'}</p>
+                            <a href="${articleDoc.link || '#'}" class="mt-4 inline-flex items-center text-base-dark font-medium text-sm hover:text-accent-copper">
+                                Read Full Report &rarr;
+                            </a>
+                        </div>
+                    `;
+                }
+                
+                articlesContainer.innerHTML = articleHTML;
+
+            } catch (error) {
+                console.error("Error loading dynamic articles:", error);
+                articlesContainer.innerHTML = `
+                    <div class="bg-red-100 rounded-xl shadow-lg p-6 border-t-4 border-red-600">
+                        <p class="text-red-800 font-medium">Error loading articles. Please check your console.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Initialize Firebase on page load
+        window.onload = initFirebase;
+    </script>
+    
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configure Tailwind to use Inter font and define custom colors -->
     <script>
-        tailwind.config = { /* ... (Include the tailwind.config from index.html) ... */ }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Earth & Copper Theme
+                        'base-dark': '#3C4818',      // Deep Forest Olive (Header, Contrast)
+                        'accent-copper': '#CC7722',  // Rustic Copper (Buttons, Fire)
+                        'sandstone-bg': '#EAE3D2',   // Rich Earth Tan (Main Background)
+                        'deep-brown': '#2E1A0D',     // Deep Earth Brown (Text)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
     </script>
     <style>
-        /* (Include the CSS styles from index.html) */
-        .menu-hidden { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .menu-visible { max-height: 300px; transition: max-height 0.5s ease-in; }
+        /* Common styles (Copied to all 6 files) */
+        .menu-hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .menu-visible {
+            max-height: 300px; 
+            transition: max-height 0.5s ease-in;
+        }
         .header-logo { height: 32px; width: auto; }
         @media (min-width: 768px) { .header-logo { height: 40px; } }
+        /* Maze Styles */
+        #maze-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f7f3e8; /* Sandstone bg */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        #maze-canvas {
+            display: block;
+            background-color: #EAE3D2; /* Match sandstone */
+            border: 2px solid #3C4818; /* Olive border */
+        }
     </style>
 </head>
-<body class="bg-trail-tan text-forge-charcoal font-sans min-h-screen">
+<body class="bg-sandstone-bg text-deep-brown font-sans min-h-screen flex flex-col">
 
-    <header class="sticky top-0 z-50 shadow-md bg-base-green">
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 shadow-md bg-base-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Logo/Brand Name -->
                 <div class="flex-shrink-0">
                     <a href="index.html">
                         <img src="uploaded:1000007367.webp-6d9a930d-2b4a-4228-a53c-a991823a078e" 
@@ -29,176 +181,440 @@
                         >
                     </a>
                 </div>
+
+                <!-- Desktop Navigation (Links point to new files) -->
                 <nav class="hidden md:flex md:space-x-8">
-                    <a href="forge.html" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
-                    <a href="lens.html" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
-                    <a href="trail-talk.html" class="text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
-                    <a href="#kids" class="text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">Kids Corner</a>
-                    <a href="forge.html" class="bg-accent-orange text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Shop Now</a>
+                    <a href="forge.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
+                    <a href="lens.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
+                    <a href="trail-talk.html" class="text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
+                    <a href="about.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Our Story</a>
+                    <a href="adventures.html" class="bg-accent-copper text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Adventures</a>
                 </nav>
-                <button id="mobile-menu-button" type="button" class="md:hidden p-2 rounded-md text-trail-tan hover:text-accent-orange focus:outline-none focus:ring-2 focus:ring-accent-orange" aria-controls="mobile-menu" aria-expanded="false">
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" type="button" class="md:hidden p-2 rounded-md text-sandstone-bg hover:text-accent-copper focus:outline-none focus:ring-2 focus:ring-accent-copper" aria-controls="mobile-menu" aria-expanded="false">
+                    <!-- Hamburger icon -->
                     <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
+                    <!-- Close icon -->
                     <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Menu -->
         <div class="menu-hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="forge.html" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
-                <a href="lens.html" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
-                <a href="trail-talk.html" class="text-accent-orange hover:bg-base-green block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
-                <a href="trail-talk.html#kids" class="text-accent-orange hover:bg-base-green block px-3 py-2 rounded-md text-base font-medium transition duration-150">Kids Corner</a>
-                <a href="forge.html" class="bg-accent-orange text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Shop Now</a>
+                <a href="forge.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
+                <a href="lens.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
+                <a href="trail-talk.html" class="text-accent-copper hover:bg-base-dark block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
+                <a href="about.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Our Story</a>
+                <a href="adventures.html" class="bg-accent-copper text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Adventures</a>
             </div>
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex-grow">
-        <h1 class="text-4xl font-bold text-center text-base-green mb-10 border-b-2 border-accent-orange pb-2">
-            🧭 Trail Talk: News, Fitness, & Reports
+        <h1 class="text-4xl font-bold text-center text-base-dark mb-10 border-b-2 border-accent-copper pb-2">
+            Trail Talk: News, Gear, & Reports
         </h1>
-        <p class="text-center text-xl text-gray-600 mb-12">
+        <p class="text-center text-xl text-deep-brown mb-12">
             The latest outdoor news, essential gear reviews, and tips to keep you and your family active.
         </p>
         
+        <!-- Latest Reports & Affiliate Section -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-forge-charcoal mb-6 border-b pb-2">Latest Reports</h2>
+            <h2 class="text-2xl font-bold text-base-dark mb-6 border-b pb-2">Latest Reports</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 border-t-4 border-base-green">
-                    <span class="text-xs font-semibold text-accent-orange uppercase">National Park Update</span>
-                    <h3 class="text-xl font-bold mt-2 text-forge-charcoal">New Permit System for Yosemite's Half Dome</h3>
-                    <p class="mt-3 text-gray-700 text-sm">A comprehensive review of the new lottery system for Half Dome cables. Includes tips on the best months to apply, and essential gear you'll need.</p>
-                    <a href="#" class="mt-4 inline-flex items-center text-base-green font-medium text-sm hover:text-accent-orange">
-                        Read Full Report &rarr;
-                    </a>
-                </article>
+                <!-- Column 1: Dynamic Article (Loads from Firestore) -->
+                <div id="dynamic-article-container" class="min-h-[150px]">
+                    <!-- Content injected by JavaScript, displaying a loading message first -->
+                    <div class="flex justify-center items-center h-full bg-white rounded-xl shadow-lg p-6 border-t-4 border-base-dark">
+                        <p class="text-base-dark font-medium">Loading the latest trail news...</p>
+                    </div>
+                </div>
 
+                <!-- Column 2: New Gear Release (Affiliate Focus) -->
                 <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                    <span class="text-xs font-semibold text-accent-orange uppercase">Gear Review & Affiliate</span>
-                    <h3 class="text-xl font-bold mt-2 text-forge-charcoal">Review: The Lightweight Tent of 2025</h3>
-                    <p class="mt-3 text-gray-700 text-sm">We field-tested the new 'Summit Seeker 2-Person' tent. Find out if the weight savings are worth the premium price.</p>
-                    <p class="mt-3 text-xs text-gray-500">
-                        *This review contains affiliate links. As an Amazon Associate, we earn from qualifying purchases.
+                    <span class="text-xs font-semibold text-accent-copper uppercase">Gear Review & Affiliate</span>
+                    <h3 class="text-xl font-bold mt-2 text-deep-brown">Review: The Lightweight Tent of 2025</h3>
+                    <p class="mt-3 text-deep-brown text-sm">We field-tested the new 'Summit Seeker 2-Person' tent. Find out if the weight savings are worth the premium price.</p>
+                    <p class="mt-3 text-xs text-gray-500 font-medium">
+                        Disclosure: This review contains affiliate links. We earn from qualifying purchases.
                     </p>
-                    <a href="#" class="mt-4 inline-flex items-center text-base-green font-medium text-sm hover:text-accent-orange">
+                    <a href="#" class="mt-4 inline-flex items-center text-base-dark font-medium text-sm hover:text-accent-copper">
                         Check Price on Amazon &rarr;
                     </a>
                 </article>
 
+                <!-- Column 3: Fitness Tip Article Preview -->
                 <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                    <span class="text-xs font-semibold text-accent-orange uppercase">Fitness Tip</span>
-                    <h3 class="text-xl font-bold mt-2 text-forge-charcoal">Trail Fitness: Pre-Hike Mobility Routine</h3>
-                    <p class="mt-3 text-gray-700 text-sm">5 simple stretches to prevent injury and boost endurance before hitting the trail. Essential for all fitness levels.</p>
-                    <a href="#" class="mt-4 inline-flex items-center text-base-green font-medium text-sm hover:text-accent-orange">
+                    <span class="text-xs font-semibold text-accent-copper uppercase">Fitness Tip</span>
+                    <h3 class="text-xl font-bold mt-2 text-deep-brown">Trail Fitness: Pre-Hike Mobility Routine</h3>
+                    <p class="mt-3 text-deep-brown text-sm">5 simple stretches to prevent injury and boost endurance before hitting the trail. Essential for all fitness levels.</p>
+                    <a href="#fitness" class="mt-4 inline-flex items-center text-base-dark font-medium text-sm hover:text-accent-copper">
                         See the Routine &rarr;
                     </a>
                 </article>
 
             </div>
         </section>
-
-        <section id="fitness" class="py-16 px-4 sm:px-6 lg:px-8 bg-base-green text-trail-tan rounded-xl my-8 shadow-2xl">
+        
+        <!-- Fitness Section (Full Article) -->
+        <section id="fitness" class="py-12 px-4 sm:px-6 lg:px-8 bg-white text-deep-brown rounded-xl my-8 shadow-2xl border-t-4 border-base-dark">
             <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-center text-accent-orange mb-10 border-b-2 border-trail-tan pb-2">
-                    💪 Fitness Basecamp: Stay Trail Ready
+                <h2 class="text-3xl font-bold text-center text-accent-copper mb-8 border-b-2 border-base-dark pb-2">
+                    Trail Fitness: The 5-Minute Pre-Hike Mobility Routine
                 </h2>
+                <p class="text-lg text-deep-brown mb-6">
+                    A proper warm-up prevents hip flexor strains and calf pain, making your first mile the best mile. Perform these five movements for 30 seconds each before starting your hike.
+                </p>
+
                 <div class="space-y-6">
-                    <div class="bg-forge-charcoal p-6 rounded-lg shadow-lg">
-                        <h3 class="text-xl font-semibold text-trail-tan">Tip #1: The Rucksack Routine</h3>
-                        <p class="mt-2 text-gray-300">
-                            Train specifically for hiking by doing weighted step-ups. Load your backpack with 20-30 lbs (or a child!) and use a sturdy chair or bench. This builds the exact strength you need for vertical trails.
+                    <!-- Mobility Tip 1: Hip Flexor Opener -->
+                    <div class="p-4 rounded-lg bg-sandstone-bg shadow-md border-l-4 border-accent-copper">
+                        <h3 class="text-xl font-semibold text-base-dark">1. Standing Hip Circles (Clockwise & Counter)</h3>
+                        <p class="mt-1 text-deep-brown text-base">
+                            Stand tall, holding onto a tree or pack for support. Lift one knee and slowly rotate your hip outward, drawing a large circle with your knee. This wakes up the stabilizing muscles around your hips and releases tightness.
                         </p>
                     </div>
-                    <div class="bg-forge-charcoal p-6 rounded-lg shadow-lg">
-                        <h3 class="text-xl font-semibold text-trail-tan">Tip #2: Ankle Stability for Uneven Trails</h3>
-                        <p class="mt-2 text-gray-300">
-                            Perform single-leg balance drills every morning while brushing your teeth. This simple practice significantly improves ankle stability, preventing twists and sprains on rocky terrain.
+
+                    <!-- Mobility Tip 2: Hamstring Activation -->
+                    <div class="p-4 rounded-lg bg-sandstone-bg shadow-md border-l-4 border-accent-copper">
+                        <h3 class="text-xl font-semibold text-base-dark">2. Straight-Legged Toe Touches (Alternating)</h3>
+                        <p class="mt-1 text-deep-brown text-base">
+                            Standing straight, alternate touching your opposite foot/shin, focusing on keeping the leg straight and hinging at the hip. This targets the hamstrings and prepares them for uphill climbs.
                         </p>
                     </div>
-                </div>
-                <div class="text-center mt-10">
-                    <a href="#" class="px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-forge-charcoal bg-accent-orange hover:bg-opacity-90 transition duration-200">
-                        See All Fitness Guides
-                    </a>
+
+                    <!-- Mobility Tip 3: Ankle & Calf Prep -->
+                    <div class="p-4 rounded-lg bg-sandstone-bg shadow-md border-l-4 border-accent-copper">
+                        <h3 class="text-xl font-semibold text-base-dark">3. Ankle Alphabet Drills</h3>
+                        <p class="mt-1 text-deep-brown text-base">
+                            Lift one foot slightly off the ground and use your toe to "draw" the letters of the alphabet (A-Z). This provides full, safe range of motion to your ankles, crucial for stability on uneven ground.
+                        </p>
+                    </div>
+                    
+                    <!-- Mobility Tip 4: Chest & Back Opener -->
+                    <div class="p-4 rounded-lg bg-sandstone-bg shadow-md border-l-4 border-accent-copper">
+                        <h3 class="text-xl font-semibold text-base-dark">4. Arm Swings & Chest Flyes</h3>
+                        <p class="mt-1 text-deep-brown text-base">
+                            Rapidly swing your arms across your chest, alternating which arm is on top, followed by large shoulder circles. This opens your chest and upper back for better posture under a pack.
+                        </p>
+                    </div>
+
+                    <!-- Mobility Tip 5: Glute Activation -->
+                    <div class="p-4 rounded-lg bg-sandstone-bg shadow-md border-l-4 border-accent-copper">
+                        <h3 class="text-xl font-semibold text-base-dark">5. Simple Glute Bridges (On Your Mat or Towel)</h3>
+                        <p class="mt-1 text-deep-brown text-base">
+                            Lying on your back, push through your heels to lift your hips until your body forms a straight line from your shoulders to your knees. This activates the powerful glute muscles for sustained uphill climbing.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- Kids Corner Section -->
         <section id="kids" class="py-16 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center text-base-green mb-10 border-b-2 border-accent-orange pb-2">
-                🖍️ Basecamp Kids Corner: Free Activities
+            <h2 class="text-3xl font-bold text-center text-base-dark mb-10 border-b-2 border-accent-copper pb-2">
+                Basecamp Kids Corner: Free Activities
             </h2>
-            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-2xl border-t-4 border-base-green">
-                <h3 class="text-2xl font-bold text-base-green text-center">
-                    Free Printable: The Redwood Forest Maze!
+            
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-2xl border-t-4 border-base-dark">
+                <h3 class="text-2xl font-bold text-base-dark text-center">
+                    The National Park Maze Pack
                 </h3>
-                <p class="mt-4 text-center text-gray-700">
-                    Keep the little explorers busy on long drives or rainy basecamp days. Download our free, outdoor-themed activity sheets instantly!
+                <p class="mt-4 text-center text-deep-brown">
+                    Keep the little explorers busy! Guide the adventurer to the finish line in our interactive demo, then grab the free 5-pack of printable mazes (Yellowstone, Glacier, Crater Lake, Rainier, & Redwood Forest).
                 </p>
-                <div class="mt-6 flex justify-center">
-                    <img src="https://placehold.co/300x300/1E392A/D97706?text=KIDS+MAZE+PREVIEW" alt="Kids Maze Preview" class="rounded-lg shadow-lg border-2 border-accent-orange">
+
+                <!-- Maze Game Area -->
+                <div id="maze-container" class="mt-6 mb-6">
+                    <canvas id="maze-canvas" width="300" height="300"></canvas>
                 </div>
-                <div class="mt-8 text-center">
-                    <input type="email" placeholder="Enter your email for the free download" class="w-full max-w-sm px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-accent-orange focus:border-accent-orange" required>
-                    <button onclick="simulateDownload()" class="mt-2 sm:mt-0 px-6 py-3 bg-accent-orange text-white font-semibold rounded-r-lg hover:bg-opacity-90 transition duration-200 shadow-md">
-                        Get the Maze Now!
+                <div class="text-center mb-8">
+                    <p id="park-theme" class="text-base-dark font-semibold mb-3">Theme: Redwood Forest</p>
+                    <button id="maze-start-button" onclick="resetGame()" class="px-6 py-2 bg-base-dark text-white font-semibold rounded-lg hover:bg-opacity-90 transition duration-200 shadow-md">
+                        Play New Maze Now
                     </button>
-                    <p id="download-message" class="mt-4 text-sm text-base-green font-medium hidden">
-                        </p>
+                    <p id="game-message" class="mt-3 text-lg font-bold text-accent-copper hidden">Use Arrow Keys to Move!</p>
+                </div>
+
+                <!-- Download CTA -->
+                <div class="mt-8 text-center border-t border-sandstone-bg pt-6">
+                    <input type="email" id="download-email" placeholder="Enter email for your FREE 5-Maze Pack" class="w-full max-w-sm px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-accent-copper focus:border-accent-copper" required>
+                    <button onclick="simulateDownload()" class="mt-2 sm:mt-0 px-6 py-3 bg-accent-copper text-white font-semibold rounded-r-lg hover:bg-opacity-90 transition duration-200 shadow-md">
+                        Download Now!
+                    </button>
+                    <p id="download-message" class="mt-4 text-sm font-medium hidden"></p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-forge-charcoal text-trail-tan p-8">
+    <!-- Footer -->
+    <footer class="mt-12 bg-base-dark text-sandstone-bg p-8 w-full">
         <div class="max-w-7xl mx-auto text-center">
             <p class="font-bold text-lg mb-2">Basecamp Creative Co.</p>
             <p class="text-sm mb-4">A Family Adventure: Blacksmithing, Photography, & Community.</p>
+            
             <div class="flex justify-center space-x-6 text-sm">
-                <a href="forge.html" class="hover:text-accent-orange transition duration-150">Forge Shop</a>
-                <a href="lens.html" class="hover:text-accent-orange transition duration-150">Gallery</a>
-                <a href="trail-talk.html" class="hover:text-accent-orange transition duration-150">Blog</a>
-                <a href="#" class="hover:text-accent-orange transition duration-150">Contact</a>
+                <a href="forge.html" class="hover:text-accent-copper transition duration-150">The Forge</a>
+                <a href="lens.html" class="hover:text-accent-copper transition duration-150">The Lens</a>
+                <a href="trail-talk.html" class="hover:text-accent-copper transition duration-150">Trail Talk</a>
+                <a href="about.html" class="hover:text-accent-copper transition duration-150">Our Story</a>
             </div>
-            <p class="mt-6 text-xs text-gray-500">© 2025 Basecamp Creative Co. | Forged with passion.</p>
+            
+            <p class="mt-6 text-xs text-gray-400">© 2025 Basecamp Creative Co. | Forged with passion.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for Mobile Menu, Maze Game, and Download Simulation -->
     <script>
+        // Mobile Menu Toggle Logic (Copied to all 6 files)
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        // (Menu toggle logic)
-        // ... (Include the full JavaScript logic from the index.html file) ...
 
-        // Simulate Free Download and Email Capture (Lead Magnet)
+        menuButton.addEventListener('click', () => {
+            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+            menuButton.setAttribute('aria-expanded', !isExpanded);
+
+            if (isExpanded) {
+                mobileMenu.classList.add('menu-hidden');
+                mobileMenu.classList.remove('menu-visible');
+                menuButton.querySelector('svg:first-child').classList.remove('hidden');
+                menuButton.querySelector('svg:last-child').classList.add('hidden');
+            } else {
+                mobileMenu.classList.add('menu-visible');
+                mobileMenu.classList.remove('menu-hidden');
+                menuButton.querySelector('svg:first-child').classList.add('hidden');
+                menuButton.querySelector('svg:last-child').classList.remove('hidden');
+            }
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.add('menu-hidden');
+                mobileMenu.classList.remove('menu-visible');
+                menuButton.setAttribute('aria-expanded', 'false');
+                menuButton.querySelector('svg:first-child').classList.remove('hidden');
+                menuButton.querySelector('svg:last-child').classList.add('hidden');
+            });
+        });
+
+        // --- KIDS MAZE GAME LOGIC ---
+
+        const canvas = document.getElementById('maze-canvas');
+        const ctx = canvas.getContext('2d');
+        const parkThemeDisplay = document.getElementById('park-theme');
+        const gameMessage = document.getElementById('game-message');
+        
+        const mazeSize = 10;
+        const cell = canvas.width / mazeSize;
+        const wallThickness = 2;
+
+        let maze = [];
+        let player = { x: 0, y: 0 };
+        const themes = [
+            { name: "Yellowstone", wallColor: "#B8860B", playerColor: "#DAA520", finishColor: "#4B0082" }, // Gold/Purple for Geysers
+            { name: "Glacier NP", wallColor: "#2F4F4F", playerColor: "#ADD8E6", finishColor: "#800000" }, // Slate/Light Blue/Red for Ice/Mountain
+            { name: "Crater Lake", wallColor: "#104E8B", playerColor: "#FFD700", finishColor: "#32CD32" }, // Deep Blue/Gold/Green for Water/Sun/Forest
+            { name: "Mt Rainier", wallColor: "#708090", playerColor: "#FFFFFF", finishColor: "#B22222" }, // Slate Gray/White/Red for Ash/Snow/Lava
+            { name: "Redwood Forest", wallColor: "#8B4513", playerColor: "#006400", finishColor: "#A0522D" } // Brown/Green/Red-Brown for Bark/Trees
+        ];
+        let currentTheme = themes[0];
+
+        function generateMaze(size) {
+            maze = Array.from({ length: size }, () => 
+                Array.from({ length: size }, () => ({
+                    visited: false,
+                    walls: { top: true, right: true, bottom: true, left: true }
+                }))
+            );
+
+            // Simple Depth-First Search Maze Generator (Recursive Backtracker)
+            function carve(x, y) {
+                const directions = [
+                    { dx: 0, dy: -1, wall: 'top', opposite: 'bottom' },
+                    { dx: 1, dy: 0, wall: 'right', opposite: 'left' },
+                    { dx: 0, dy: 1, wall: 'bottom', opposite: 'top' },
+                    { dx: -1, dy: 0, wall: 'left', opposite: 'right' }
+                ];
+                
+                maze[y][x].visited = true;
+                
+                // Shuffle directions for a more randomized maze
+                directions.sort(() => Math.random() - 0.5);
+
+                for (const dir of directions) {
+                    const nx = x + dir.dx;
+                    const ny = y + dir.dy;
+
+                    if (nx >= 0 && nx < size && ny >= 0 && ny < size && !maze[ny][nx].visited) {
+                        // Carve path
+                        maze[y][x].walls[dir.wall] = false;
+                        maze[ny][nx].walls[dir.opposite] = false;
+                        carve(nx, ny);
+                    }
+                }
+            }
+            carve(0, 0); // Start carving from the top-left corner
+        }
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = currentTheme.wallColor;
+            ctx.lineWidth = wallThickness;
+
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    const cx = x * cell;
+                    const cy = y * cell;
+
+                    // Draw walls
+                    if (maze[y][x].walls.top) {
+                        ctx.beginPath();
+                        ctx.moveTo(cx, cy);
+                        ctx.lineTo(cx + cell, cy);
+                        ctx.stroke();
+                    }
+                    if (maze[y][x].walls.right) {
+                        ctx.beginPath();
+                        ctx.moveTo(cx + cell, cy);
+                        ctx.lineTo(cx + cell, cy + cell);
+                        ctx.stroke();
+                    }
+                    if (maze[y][x].walls.bottom) {
+                        ctx.beginPath();
+                        ctx.moveTo(cx, cy + cell);
+                        ctx.lineTo(cx + cell, cy + cell);
+                        ctx.stroke();
+                    }
+                    if (maze[y][x].walls.left) {
+                        ctx.beginPath();
+                        ctx.moveTo(cx, cy);
+                        ctx.lineTo(cx, cy + cell);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw Finish Point (Bottom Right)
+            ctx.fillStyle = currentTheme.finishColor;
+            ctx.fillRect((mazeSize - 1) * cell + wallThickness, (mazeSize - 1) * cell + wallThickness, cell - 2 * wallThickness, cell - 2 * wallThickness);
+
+            // Draw Player
+            ctx.fillStyle = currentTheme.playerColor;
+            const playerSize = cell * 0.4;
+            const playerX = player.x * cell + cell / 2 - playerSize / 2;
+            const playerY = player.y * cell + cell / 2 - playerSize / 2;
+            ctx.fillRect(playerX, playerY, playerSize, playerSize);
+        }
+
+        function movePlayer(dx, dy) {
+            const currentCell = maze[player.y][player.x];
+            let newX = player.x + dx;
+            let newY = player.y + dy;
+
+            // Check for winning condition
+            if (player.x === mazeSize - 1 && player.y === mazeSize - 1) {
+                // Already won, prevent further movement until reset
+                return;
+            }
+
+            let canMove = false;
+            if (dx === 1 && !currentCell.walls.right) canMove = true; // Right
+            if (dx === -1 && !currentCell.walls.left) canMove = true;  // Left
+            if (dy === 1 && !currentCell.walls.bottom) canMove = true; // Down
+            if (dy === -1 && !currentCell.walls.top) canMove = true;   // Up
+
+            if (canMove) {
+                player.x = newX;
+                player.y = newY;
+                drawMaze();
+
+                // Check for win after the move
+                if (player.x === mazeSize - 1 && player.y === mazeSize - 1) {
+                    gameMessage.textContent = `You Reached the Basecamp! (${currentTheme.name} Complete!)`;
+                    gameMessage.classList.add('text-green-600');
+                    gameMessage.classList.remove('text-accent-copper');
+                    document.removeEventListener('keydown', handleKeyPress);
+                }
+            }
+        }
+
+        function handleKeyPress(e) {
+            // Check if game is already won
+            if (player.x === mazeSize - 1 && player.y === mazeSize - 1) return;
+
+            switch (e.key) {
+                case 'ArrowUp':
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movePlayer(1, 0);
+                    break;
+            }
+        }
+
+        function resetGame() {
+            const randomIndex = Math.floor(Math.random() * themes.length);
+            currentTheme = themes[randomIndex];
+            parkThemeDisplay.textContent = `Theme: ${currentTheme.name}`;
+
+            player = { x: 0, y: 0 };
+            generateMaze(mazeSize);
+            drawMaze();
+            
+            gameMessage.textContent = 'Use Arrow Keys to Move!';
+            gameMessage.classList.remove('hidden', 'text-green-600');
+            gameMessage.classList.add('text-accent-copper');
+            
+            document.removeEventListener('keydown', handleKeyPress);
+            document.addEventListener('keydown', handleKeyPress);
+        }
+
+        // Initialize the game when the window loads
+        // NOTE: Firebase init is also triggered by window.onload, and it calls loadArticles()
+        // The maze init will run as soon as its elements are available.
+        document.addEventListener('DOMContentLoaded', function() {
+            if(canvas) {
+                resetGame();
+            }
+        });
+
+        // --- EMAIL DOWNLOAD LOGIC ---
         function simulateDownload() {
-            const emailInput = document.querySelector('#kids input[type="email"]');
+            const emailInput = document.getElementById('download-email').value.trim();
             const downloadMessage = document.getElementById('download-message');
             
-            if (emailInput.value && emailInput.value.includes('@') && emailInput.value.includes('.')) {
-                downloadMessage.textContent = `Success! The Redwood Maze is on its way to ${emailInput.value}. Check your spam folder!`;
-                downloadMessage.classList.remove('hidden');
-                downloadMessage.classList.remove('text-red-600');
-                downloadMessage.classList.add('text-base-green');
-                emailInput.value = '';
+            if (emailInput && emailInput.includes('@') && emailInput.includes('.')) {
+                // Success
+                downloadMessage.textContent = `Success! Your 5-Maze Pack is on its way to ${emailInput}. Check your inbox!`;
+                downloadMessage.classList.remove('hidden', 'text-red-600');
+                downloadMessage.classList.add('text-base-dark');
+                
+                // Clear inputs after success
+                document.getElementById('download-email').value = '';
             } else {
-                downloadMessage.textContent = 'Oops! Please enter a valid email address to get the free maze.';
-                downloadMessage.classList.remove('hidden');
-                downloadMessage.classList.remove('text-base-green');
+                // Error
+                downloadMessage.textContent = 'Oops! Please enter a valid email address.';
+                downloadMessage.classList.remove('hidden', 'text-base-dark');
                 downloadMessage.classList.add('text-red-600');
-                setTimeout(() => {
-                    downloadMessage.classList.add('hidden');
-                    downloadMessage.classList.remove('text-red-600');
-                }, 3000);
             }
         }
     </script>
-
 </body>
 </html>

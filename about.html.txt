@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Lens | Basecamp Creative Co.</title>
+    <title>Our Story & Contact | Basecamp Creative Co.</title>
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -61,9 +61,9 @@
                 <!-- Desktop Navigation (Links point to new files) -->
                 <nav class="hidden md:flex md:space-x-8">
                     <a href="forge.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
-                    <a href="lens.html" class="text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
+                    <a href="lens.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
                     <a href="trail-talk.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
-                    <a href="about.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Our Story</a>
+                    <a href="about.html" class="text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Our Story</a>
                     <a href="adventures.html" class="bg-accent-copper text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Adventures</a>
                 </nav>
 
@@ -85,78 +85,83 @@
         <div class="menu-hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="forge.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
-                <a href="lens.html" class="text-accent-copper hover:bg-base-dark block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
+                <a href="lens.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
                 <a href="trail-talk.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
-                <a href="about.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Our Story</a>
+                <a href="about.html" class="text-accent-copper hover:bg-base-dark block px-3 py-2 rounded-md text-base font-medium transition duration-150">Our Story</a>
                 <a href="adventures.html" class="bg-accent-copper text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Adventures</a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Area: The Lens -->
-    <main class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex-grow">
+    <!-- Main Content Area: Our Story -->
+    <main class="max-w-5xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex-grow">
         <h1 class="text-4xl font-bold text-center text-base-dark mb-10 border-b-2 border-accent-copper pb-2">
-            The Lens: Captured on the Trail
+            Our Story: Husband, Father, Adventurer
         </h1>
-        <p class="text-center text-xl text-deep-brown mb-12">
-            Bringing the wild landscapes home. Fine art prints and digital licenses from our expeditions.
-        </p>
 
-        <!-- Product/Service Rows -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
             
-            <!-- 1. Fine Art Prints (Bison Photo) -->
-            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-accent-copper">
-                <img src="https://placehold.co/600x400/3C4818/EAE3D2?text=BISON+PHOTO+STANDING+BULL" alt="The Bison Photo 'Standing Bull' Print" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-deep-brown">The Bison Photo "Standing Bull" Print</h3>
-                <p class="text-accent-copper font-bold text-2xl mt-1">From $99.00</p>
-                <p class="mt-3 text-deep-brown text-sm">Limited Edition Fine Art Print. A powerful landscape captured on archival paper, perfect for your home or office.</p>
-                <a href="#" class="mt-4 block text-center bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                    Order Prints
-                </a>
+            <!-- Sidebar Image/Mission -->
+            <div class="md:col-span-1 bg-white p-6 rounded-xl shadow-lg border-t-4 border-accent-copper">
+                <img src="https://placehold.co/400x400/3C4818/EAE3D2?text=Family+Adventure" alt="A family hiking portrait" class="w-full rounded-lg shadow-md mb-6">
+                
+                <h3 class="text-xl font-bold text-deep-brown mb-3">Our Mission</h3>
+                <p class="text-sm text-gray-700">
+                    To forge durable goods and share authentic adventures that inspire families to step away from the everyday and connect with the wild. Every piece of iron and every photograph tells a story.
+                </p>
+                <div class="mt-4 text-center">
+                    <a href="adventures.html" class="inline-block text-sm font-medium text-accent-copper hover:text-base-dark transition duration-150">
+                        Join the Journey &rarr;
+                    </a>
+                </div>
             </div>
 
-            <!-- 2. Digital Stock Packs -->
-            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-base-dark">
-                <img src="https://placehold.co/600x400/CC7722/2E1A0D?text=Digital+Stock+Photos" alt="Digital Stock Photo Packs" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-deep-brown">Commercial Digital Stock Packs</h3>
-                <p class="text-base-dark font-bold text-2xl mt-1">Starting at $75.00</p>
-                <p class="mt-3 text-deep-brown text-sm">Need rugged, authentic outdoor imagery for your business? Purchase digital licenses for commercial use instantly.</p>
-                <a href="#" class="mt-4 block text-center bg-base-dark text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                    Buy Licenses
-                </a>
-            </div>
+            <!-- Main Story Content -->
+            <div class="md:col-span-2 space-y-6">
+                <h2 class="text-2xl font-bold text-base-dark">From the Forge to the Forest Floor</h2>
+                <p class="text-lg text-deep-brown">
+                    Basecamp Creative Co. is built on three passions: the rugged craftsmanship of **blacksmithing**, the pursuit of the perfect **photograph** in the wild, and the foundation of **family**. I'm a husband and a father of two, and every piece of content, every item in the forge, and every adventure we document is filtered through that lens.
+                </p>
 
-            <!-- 3. Adventure Sessions Callout (Redirects to Adventures Page) -->
-            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-accent-copper">
-                <img src="https://placehold.co/600x400/EAE3D2/3C4818?text=Family+Adventure+Photography" alt="Family Adventure Photography Session" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-deep-brown">Family Adventure Photography</h3>
-                <p class="text-accent-copper font-bold text-2xl mt-1">Book a Session</p>
-                <p class="mt-3 text-deep-brown text-sm">For personalized, high-touch photography sessions in the greater PNW area, see our dedicated adventure packages.</p>
-                <a href="adventures.html" class="mt-4 block text-center bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                    View Adventure Packages
-                </a>
-            </div>
+                <p class="text-lg text-deep-brown">
+                    My journey as an amateur blacksmith started as a quest to create tools as durable as the places we explore. This naturally fused with my work as a **professional photographer**, capturing the stunning landscapes of the Pacific Northwest and the genuine joy of family on the trail.
+                </p>
 
+                <p class="text-lg text-deep-brown">
+                    We believe your home should be your basecamp—a place where durable, beautiful things live alongside memories of the trail. This site is a creative outlet and a community resource for families who value quality goods and shared adventure.
+                </p>
+
+                <h2 class="text-2xl font-bold text-base-dark pt-4">Connect with the Basecamp</h2>
+                <p class="text-deep-brown">
+                    Have a question about a custom forging project, want to license a photo, or need to book a PNW adventure? Send us a message!
+                </p>
+
+                <!-- Contact Form Simulation -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <form onsubmit="event.preventDefault(); showContactMessage();" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-base-dark">Name</label>
+                            <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-accent-copper focus:border-accent-copper bg-sandstone-bg">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-base-dark">Email</label>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-accent-copper focus:border-accent-copper bg-sandstone-bg" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-base-dark">Message / Inquiry Type</label>
+                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-accent-copper focus:border-accent-copper bg-sandstone-bg" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-full shadow-lg text-white font-semibold bg-accent-copper hover:bg-opacity-90 transition duration-200">
+                            Send Inquiry
+                        </button>
+                    </form>
+                    <p id="contact-message" class="mt-4 text-center text-sm font-medium hidden">
+                        <!-- Success/Error message displayed here -->
+                    </p>
+                </div>
+            </div>
+            
         </div>
-
-        <!-- Gallery Showcase -->
-        <h2 class="text-3xl font-bold text-center text-base-dark mt-16 mb-8 border-b-2 border-base-dark pb-2">
-            The Gallery Showcase
-        </h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Photos -->
-            <img src="https://placehold.co/800x600/3C4818/FFFFFF?text=Mountain+Vista+Print" alt="Mountain Vista Landscape" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/CC7722/2E1A0D?text=Forest+Detail+Macro" alt="Forest Detail Macro" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/2E1A0D/EAE3D2?text=Campfire+Sunset" alt="Campfire Sunset" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/EAE3D2/3C4818?text=Wildlife+Action" alt="Wildlife in Action" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/5A6E32/FFFFFF?text=Deep+River+Shot" alt="Deep River Shot" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/8B6F4D/2E1A0D?text=Autumn+Foliage" alt="Autumn Foliage" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/B24D4D/FFFFFF?text=Ocean+Coastline" alt="Ocean Coastline" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/60783C/CC7722?text=Snowy+Peak" alt="Snowy Peak" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-        </div>
-
-
     </main>
 
     <!-- Footer -->
@@ -169,14 +174,14 @@
                 <a href="forge.html" class="hover:text-accent-copper transition duration-150">The Forge</a>
                 <a href="lens.html" class="hover:text-accent-copper transition duration-150">The Lens</a>
                 <a href="trail-talk.html" class="hover:text-accent-copper transition duration-150">Trail Talk</a>
-                <a href="about.html" class="hover:text-accent-copper transition duration-150">Our Story</a>
+                <a href="adventures.html" class="hover:text-accent-copper transition duration-150">Adventures</a>
             </div>
             
             <p class="mt-6 text-xs text-gray-400">© 2025 Basecamp Creative Co. | Forged with passion.</p>
         </div>
     </footer>
 
-    <!-- JavaScript for Mobile Menu -->
+    <!-- JavaScript -->
     <script>
         // Mobile Menu Toggle Logic (Copied to all 6 files)
         const menuButton = document.getElementById('mobile-menu-button');
@@ -208,6 +213,19 @@
                 menuButton.querySelector('svg:last-child').classList.add('hidden');
             });
         });
+
+        // Contact Form Submission Simulation
+        function showContactMessage() {
+            const contactMessage = document.getElementById('contact-message');
+            contactMessage.textContent = 'Thank you! Your message has been sent, and we\'ll be in touch soon.';
+            contactMessage.classList.remove('hidden');
+            contactMessage.classList.add('text-base-dark');
+            
+            // Clear the form fields after successful submission simulation
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+        }
     </script>
 
 </body>

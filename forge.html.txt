@@ -4,23 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Forge | Basecamp Creative Co.</title>
+    
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configure Tailwind to use Inter font and define custom colors -->
     <script>
-        tailwind.config = { /* ... (Include the tailwind.config from index.html) ... */ }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Earth & Copper Theme
+                        'base-dark': '#3C4818',      // Deep Forest Olive (Header, Contrast)
+                        'accent-copper': '#CC7722',  // Rustic Copper (Buttons, Fire)
+                        'sandstone-bg': '#EAE3D2',   // Rich Earth Tan (Main Background)
+                        'deep-brown': '#2E1A0D',     // Deep Earth Brown (Text)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
     </script>
     <style>
-        /* (Include the CSS styles from index.html) */
-        .menu-hidden { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .menu-visible { max-height: 300px; transition: max-height 0.5s ease-in; }
+        /* Common styles (Copied to all 6 files) */
+        .menu-hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .menu-visible {
+            max-height: 300px; 
+            transition: max-height 0.5s ease-in;
+        }
         .header-logo { height: 32px; width: auto; }
         @media (min-width: 768px) { .header-logo { height: 40px; } }
     </style>
 </head>
-<body class="bg-trail-tan text-forge-charcoal font-sans min-h-screen">
+<body class="bg-sandstone-bg text-deep-brown font-sans min-h-screen flex flex-col">
 
-    <header class="sticky top-0 z-50 shadow-md bg-base-green">
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 shadow-md bg-base-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Logo/Brand Name -->
                 <div class="flex-shrink-0">
                     <a href="index.html">
                         <img src="uploaded:1000007367.webp-6d9a930d-2b4a-4228-a53c-a991823a078e" 
@@ -29,100 +57,153 @@
                         >
                     </a>
                 </div>
+
+                <!-- Desktop Navigation (Links point to new files) -->
                 <nav class="hidden md:flex md:space-x-8">
-                    <a href="forge.html" class="text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
-                    <a href="lens.html" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
-                    <a href="trail-talk.html" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
-                    <a href="trail-talk.html#kids" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">Kids Corner</a>
-                    <a href="forge.html" class="bg-accent-orange text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Shop Now</a>
+                    <a href="forge.html" class="text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
+                    <a href="lens.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
+                    <a href="trail-talk.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
+                    <a href="about.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Our Story</a>
+                    <a href="adventures.html" class="bg-accent-copper text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Adventures</a>
                 </nav>
-                <button id="mobile-menu-button" type="button" class="md:hidden p-2 rounded-md text-trail-tan hover:text-accent-orange focus:outline-none focus:ring-2 focus:ring-accent-orange" aria-controls="mobile-menu" aria-expanded="false">
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" type="button" class="md:hidden p-2 rounded-md text-sandstone-bg hover:text-accent-copper focus:outline-none focus:ring-2 focus:ring-accent-copper" aria-controls="mobile-menu" aria-expanded="false">
+                    <!-- Hamburger icon -->
                     <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
+                    <!-- Close icon -->
                     <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Menu -->
         <div class="menu-hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="forge.html" class="text-accent-orange hover:bg-base-green block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
-                <a href="lens.html" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
-                <a href="trail-talk.html" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
-                <a href="trail-talk.html#kids" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">Kids Corner</a>
-                <a href="forge.html" class="bg-accent-orange text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Shop Now</a>
+                <a href="forge.html" class="text-accent-copper hover:bg-base-dark block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
+                <a href="lens.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
+                <a href="trail-talk.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
+                <a href="about.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Our Story</a>
+                <a href="adventures.html" class="bg-accent-copper text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Adventures</a>
             </div>
         </div>
     </header>
 
+    <!-- Main Content Area: The Forge -->
     <main class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex-grow">
-        <h1 class="text-4xl font-bold text-center text-base-green mb-10 border-b-2 border-accent-orange pb-2">
-            🔥 Hand-Forged for the Home & Trail
+        <h1 class="text-4xl font-bold text-center text-base-dark mb-10 border-b-2 border-accent-copper pb-2">
+            The Forge: Tools and Heirlooms
         </h1>
-        <p class="text-center text-xl text-gray-600 mb-12">
-            Durable goods built by an amateur blacksmith—designed for the outdoor lifestyle and built to last.
+        <p class="text-center text-xl text-deep-brown mb-12">
+            Durable goods built by an amateur blacksmith—designed for the outdoor lifestyle and family home.
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300">
-                <img src="https://placehold.co/600x400/1E392A/FFFFFF?text=Forged+Fire+Poker" alt="Hand Forged Fire Poker" class="w-full h-48 object-cover">
+            <!-- Product 1: Tomahawk -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-base-dark">
+                <img src="https://placehold.co/600x400/3C4818/EAE3D2?text=Forged+Basecamp+Tomahawk" alt="Hand Forged Basecamp Tomahawk" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-forge-charcoal">Campfire Pro-Poker</h3>
-                    <p class="text-base-green font-bold text-2xl mt-1">$65.00</p>
-                    <p class="mt-3 text-gray-600">Twisted steel, built to last a lifetime of campfires. Essential basecamp gear.</p>
-                    <button class="mt-4 w-full bg-accent-orange text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
+                    <h3 class="text-xl font-semibold text-deep-brown">The Basecamp Tomahawk</h3>
+                    <p class="text-accent-copper font-bold text-2xl mt-1">$195.00</p>
+                    <p class="mt-3 text-deep-brown">A full-tang, field-ready tomahawk built from high-carbon steel. Perfect for bushcraft, clearing camp, or heavy trail work.</p>
+                    <button class="mt-4 w-full bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
                         Add to Cart
                     </button>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300">
-                <img src="https://placehold.co/600x400/D97706/1E392A?text=Forged+Key+Hook" alt="Hand Forged Key Hook" class="w-full h-48 object-cover">
+            <!-- Product 2: Steel Table Top Tree -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-base-dark">
+                <img src="https://placehold.co/600x400/CC7722/2E1A0D?text=Forged+Steel+Tabletop+Tree" alt="Hand Forged Steel Table Top Tree" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-forge-charcoal">Mountain Range Key Hook</h3>
-                    <p class="text-base-green font-bold text-2xl mt-1">$35.00</p>
-                    <p class="mt-3 text-gray-600">A small piece of hand-forged art for your entryway. Ready for adventure.</p>
-                    <button class="mt-4 w-full bg-accent-orange text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
+                    <h3 class="text-xl font-semibold text-deep-brown">Forged Steel Tabletop Tree</h3>
+                    <p class="text-accent-copper font-bold text-2xl mt-1">$120.00</p>
+                    <p class="mt-3 text-deep-brown">A sculptural, wrought steel piece designed as a rustic holiday or year-round family heirloom. Built to stand the test of time.</p>
+                    <button class="mt-4 w-full bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
                         Add to Cart
                     </button>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300">
-                <img src="https://placehold.co/600x400/1E392A/D97706?text=Family+Forging" alt="Custom Family Forging" class="w-full h-48 object-cover">
+            <!-- Product 3: Trailhead Bottle Opener -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-base-dark">
+                <img src="https://placehold.co/600x400/2E1A0D/EAE3D2?text=Forged+Trailhead+Bottle+Opener" alt="Hand Forged Trailhead Bottle Opener" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-forge-charcoal">Custom Family Crest Forging</h3>
-                    <p class="text-base-green font-bold text-2xl mt-1">Starting at $199</p>
-                    <p class="mt-3 text-gray-600">A custom, hand-forged heirloom for your home's "basecamp."</p>
-                    <button class="mt-4 w-full bg-base-green text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                        Inquire for Custom Order
+                    <h3 class="text-xl font-semibold text-deep-brown">Trailhead Bottle Opener</h3>
+                    <p class="text-accent-copper font-bold text-2xl mt-1">$35.00</p>
+                    <p class="mt-3 text-deep-brown">A twisted iron opener that fits perfectly in a camp kit or on a keyring. Ready for your post-hike reward.</p>
+                    <button class="mt-4 w-full bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
+                        Add to Cart
                     </button>
                 </div>
             </div>
+        </div>
+
+        <!-- Custom Orders Callout -->
+        <div class="mt-16 text-center bg-base-dark text-sandstone-bg p-8 rounded-xl shadow-xl">
+            <h2 class="text-3xl font-bold mb-4">Need Something Custom?</h2>
+            <p class="text-lg text-gray-300 mb-6">
+                From custom fireplace tools to personalized iron signs, we forge your vision into reality.
+            </p>
+            <a href="about.html" class="px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-base-dark bg-accent-copper hover:bg-opacity-90 transition duration-200">
+                Inquire for Custom Work
+            </a>
         </div>
     </main>
 
-    <footer class="bg-forge-charcoal text-trail-tan p-8">
+    <!-- Footer -->
+    <footer class="mt-12 bg-base-dark text-sandstone-bg p-8 w-full">
         <div class="max-w-7xl mx-auto text-center">
             <p class="font-bold text-lg mb-2">Basecamp Creative Co.</p>
             <p class="text-sm mb-4">A Family Adventure: Blacksmithing, Photography, & Community.</p>
+            
             <div class="flex justify-center space-x-6 text-sm">
-                <a href="forge.html" class="hover:text-accent-orange transition duration-150">Forge Shop</a>
-                <a href="lens.html" class="hover:text-accent-orange transition duration-150">Gallery</a>
-                <a href="trail-talk.html" class="hover:text-accent-orange transition duration-150">Blog</a>
-                <a href="#" class="hover:text-accent-orange transition duration-150">Contact</a>
+                <a href="forge.html" class="hover:text-accent-copper transition duration-150">The Forge</a>
+                <a href="lens.html" class="hover:text-accent-copper transition duration-150">The Lens</a>
+                <a href="trail-talk.html" class="hover:text-accent-copper transition duration-150">Trail Talk</a>
+                <a href="about.html" class="hover:text-accent-copper transition duration-150">Our Story</a>
             </div>
-            <p class="mt-6 text-xs text-gray-500">© 2025 Basecamp Creative Co. | Forged with passion.</p>
+            
+            <p class="mt-6 text-xs text-gray-400">© 2025 Basecamp Creative Co. | Forged with passion.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for Mobile Menu -->
     <script>
+        // Mobile Menu Toggle Logic (Copied to all 6 files)
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        // (Menu toggle logic)
-        // ... (Include the full JavaScript logic from the index.html file) ...
+
+        menuButton.addEventListener('click', () => {
+            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+            menuButton.setAttribute('aria-expanded', !isExpanded);
+
+            if (isExpanded) {
+                mobileMenu.classList.add('menu-hidden');
+                mobileMenu.classList.remove('menu-visible');
+                menuButton.querySelector('svg:first-child').classList.remove('hidden');
+                menuButton.querySelector('svg:last-child').classList.add('hidden');
+            } else {
+                mobileMenu.classList.add('menu-visible');
+                mobileMenu.classList.remove('menu-hidden');
+                menuButton.querySelector('svg:first-child').classList.add('hidden');
+                menuButton.querySelector('svg:last-child').classList.remove('hidden');
+            }
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.add('menu-hidden');
+                mobileMenu.classList.remove('menu-visible');
+                menuButton.setAttribute('aria-expanded', 'false');
+                menuButton.querySelector('svg:first-child').classList.remove('hidden');
+                menuButton.querySelector('svg:last-child').classList.add('hidden');
+            });
+        });
     </script>
 
 </body>

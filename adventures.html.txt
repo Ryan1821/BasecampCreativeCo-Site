@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Lens | Basecamp Creative Co.</title>
+    <title>PNW Guided Adventures | Basecamp Creative Co.</title>
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -61,7 +61,7 @@
                 <!-- Desktop Navigation (Links point to new files) -->
                 <nav class="hidden md:flex md:space-x-8">
                     <a href="forge.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
-                    <a href="lens.html" class="text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
+                    <a href="lens.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
                     <a href="trail-talk.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
                     <a href="about.html" class="text-sandstone-bg hover:text-accent-copper px-3 py-2 text-sm font-medium transition duration-150">Our Story</a>
                     <a href="adventures.html" class="bg-accent-copper text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Adventures</a>
@@ -85,7 +85,7 @@
         <div class="menu-hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="forge.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
-                <a href="lens.html" class="text-accent-copper hover:bg-base-dark block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
+                <a href="lens.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
                 <a href="trail-talk.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
                 <a href="about.html" class="text-sandstone-bg hover:bg-base-dark hover:text-accent-copper block px-3 py-2 rounded-md text-base font-medium transition duration-150">Our Story</a>
                 <a href="adventures.html" class="bg-accent-copper text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Adventures</a>
@@ -93,69 +93,80 @@
         </div>
     </header>
 
-    <!-- Main Content Area: The Lens -->
+    <!-- Main Content Area: Adventures -->
     <main class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex-grow">
         <h1 class="text-4xl font-bold text-center text-base-dark mb-10 border-b-2 border-accent-copper pb-2">
-            The Lens: Captured on the Trail
+            PNW Guided Adventures & Photography
         </h1>
         <p class="text-center text-xl text-deep-brown mb-12">
-            Bringing the wild landscapes home. Fine art prints and digital licenses from our expeditions.
+            High-value, fully guided trail experiences and personalized photography sessions in the Pacific Northwest.
         </p>
 
-        <!-- Product/Service Rows -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
-            <!-- 1. Fine Art Prints (Bison Photo) -->
-            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-accent-copper">
-                <img src="https://placehold.co/600x400/3C4818/EAE3D2?text=BISON+PHOTO+STANDING+BULL" alt="The Bison Photo 'Standing Bull' Print" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-deep-brown">The Bison Photo "Standing Bull" Print</h3>
-                <p class="text-accent-copper font-bold text-2xl mt-1">From $99.00</p>
-                <p class="mt-3 text-deep-brown text-sm">Limited Edition Fine Art Print. A powerful landscape captured on archival paper, perfect for your home or office.</p>
-                <a href="#" class="mt-4 block text-center bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                    Order Prints
-                </a>
+            <!-- Adventure Package 1: The Guided Trail Experience -->
+            <div class="bg-white rounded-xl shadow-2xl p-8 border-t-8 border-base-dark">
+                <div class="text-center mb-6">
+                    <span class="text-sm font-bold uppercase text-accent-copper bg-sandstone-bg px-3 py-1 rounded-full shadow-md">FLAGSHIP OFFERING</span>
+                </div>
+                <h2 class="text-3xl font-bold text-deep-brown text-center mb-4">
+                    2-Day PNW Trail Package
+                </h2>
+                <p class="text-center text-2xl font-extrabold text-base-dark mb-6">
+                    Starting at $1,500
+                </p>
+
+                <div class="space-y-4 text-deep-brown">
+                    <p class="text-lg font-medium border-b pb-2">
+                        Experience the most incredible trails in the region with an experienced guide. We handle the route planning, safety, and photography.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li>**Private Guided Hike:** Choose from trails in Olympic, Rainier, or Cascades National Parks.</li>
+                        <li>**Professional Photography:** Receive a gallery of high-resolution, edited images documenting your entire journey.</li>
+                        <li>**Safety & Gear Consult:** Expert advice on required gear and emergency planning.</li>
+                        <li>**Family-Friendly Options:** Routes tailored to your fitness level and family needs.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <a href="mailto:contact@basecampcreativeco.com" class="w-full lg:w-3/4 px-8 py-4 border border-transparent text-lg font-medium rounded-full shadow-lg text-white bg-accent-copper hover:bg-opacity-90 transition duration-200 transform hover:scale-105">
+                        Inquire & Book Your Trail Date
+                    </a>
+                </div>
             </div>
 
-            <!-- 2. Digital Stock Packs -->
-            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-base-dark">
-                <img src="https://placehold.co/600x400/CC7722/2E1A0D?text=Digital+Stock+Photos" alt="Digital Stock Photo Packs" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-deep-brown">Commercial Digital Stock Packs</h3>
-                <p class="text-base-dark font-bold text-2xl mt-1">Starting at $75.00</p>
-                <p class="mt-3 text-deep-brown text-sm">Need rugged, authentic outdoor imagery for your business? Purchase digital licenses for commercial use instantly.</p>
-                <a href="#" class="mt-4 block text-center bg-base-dark text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                    Buy Licenses
-                </a>
-            </div>
+            <!-- Service 2: Personalized Photography Session -->
+            <div class="bg-base-dark rounded-xl shadow-2xl p-8 text-sandstone-bg border-t-8 border-accent-copper">
+                <h2 class="text-3xl font-bold text-accent-copper text-center mb-4">
+                    On-Location Photography Sessions
+                </h2>
+                <p class="text-center text-lg text-gray-300 mb-6">
+                    Perfect for families, engagements, or brand shoots requiring stunning natural PNW backdrops.
+                </p>
+                
+                <div class="space-y-4 text-sandstone-bg">
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li>**Custom Locations:** Serving the greater Seattle, Portland, and Olympic Peninsula regions.</li>
+                        <li>**Natural Light Expertise:** Utilizing golden hour and deep forest light for dramatic imagery.</li>
+                        <li>**High-Resolution Delivery:** Receive a private online gallery with full printing rights.</li>
+                        <li>**Gear Inclusion:** Optional inclusion of custom-forged props for unique shots (e.g., iron wedding bands).</li>
+                    </ul>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a href="mailto:contact@basecampcreativeco.com" class="w-full lg:w-3/4 px-8 py-4 border border-transparent text-lg font-medium rounded-full shadow-lg text-base-dark bg-sandstone-bg hover:bg-white transition duration-200 transform hover:scale-105">
+                        Request Pricing & Availability
+                    </a>
+                </div>
 
-            <!-- 3. Adventure Sessions Callout (Redirects to Adventures Page) -->
-            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-accent-copper">
-                <img src="https://placehold.co/600x400/EAE3D2/3C4818?text=Family+Adventure+Photography" alt="Family Adventure Photography Session" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-deep-brown">Family Adventure Photography</h3>
-                <p class="text-accent-copper font-bold text-2xl mt-1">Book a Session</p>
-                <p class="mt-3 text-deep-brown text-sm">For personalized, high-touch photography sessions in the greater PNW area, see our dedicated adventure packages.</p>
-                <a href="adventures.html" class="mt-4 block text-center bg-accent-copper text-white py-2 rounded-lg font-medium hover:bg-opacity-90 transition duration-200 shadow-md">
-                    View Adventure Packages
-                </a>
+                <div class="mt-8 pt-6 border-t border-gray-600 text-center">
+                    <p class="text-sm text-gray-400">
+                        *All adventure packages include a pre-hike fitness consultation based on our Trail Talk routines.
+                    </p>
+                </div>
             </div>
-
+            
         </div>
-
-        <!-- Gallery Showcase -->
-        <h2 class="text-3xl font-bold text-center text-base-dark mt-16 mb-8 border-b-2 border-base-dark pb-2">
-            The Gallery Showcase
-        </h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Photos -->
-            <img src="https://placehold.co/800x600/3C4818/FFFFFF?text=Mountain+Vista+Print" alt="Mountain Vista Landscape" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/CC7722/2E1A0D?text=Forest+Detail+Macro" alt="Forest Detail Macro" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/2E1A0D/EAE3D2?text=Campfire+Sunset" alt="Campfire Sunset" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/EAE3D2/3C4818?text=Wildlife+Action" alt="Wildlife in Action" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/5A6E32/FFFFFF?text=Deep+River+Shot" alt="Deep River Shot" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/8B6F4D/2E1A0D?text=Autumn+Foliage" alt="Autumn Foliage" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/B24D4D/FFFFFF?text=Ocean+Coastline" alt="Ocean Coastline" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-            <img src="https://placehold.co/800x600/60783C/CC7722?text=Snowy+Peak" alt="Snowy Peak" class="w-full h-32 sm:h-48 object-cover rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer">
-        </div>
-
 
     </main>
 
