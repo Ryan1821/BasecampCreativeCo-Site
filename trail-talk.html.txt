@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trail Talk | News, Fitness & Kids' Corner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { /* ... (Include the tailwind.config from index.html) ... */ }
+    </script>
+    <style>
+        /* (Include the CSS styles from index.html) */
+        .menu-hidden { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .menu-visible { max-height: 300px; transition: max-height 0.5s ease-in; }
+        .header-logo { height: 32px; width: auto; }
+        @media (min-width: 768px) { .header-logo { height: 40px; } }
+    </style>
+</head>
+<body class="bg-trail-tan text-forge-charcoal font-sans min-h-screen">
+
+    <header class="sticky top-0 z-50 shadow-md bg-base-green">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html">
+                        <img src="uploaded:1000007367.webp-6d9a930d-2b4a-4228-a53c-a991823a078e" 
+                             alt="Basecamp Creative Co. Logo - Forge, Lens & Trail" 
+                             class="header-logo"
+                        >
+                    </a>
+                </div>
+                <nav class="hidden md:flex md:space-x-8">
+                    <a href="forge.html" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">The Forge</a>
+                    <a href="lens.html" class="text-trail-tan hover:text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">The Lens</a>
+                    <a href="trail-talk.html" class="text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">Trail Talk</a>
+                    <a href="#kids" class="text-accent-orange px-3 py-2 text-sm font-medium transition duration-150">Kids Corner</a>
+                    <a href="forge.html" class="bg-accent-orange text-white rounded-full px-3 py-2 text-sm font-medium hover:bg-opacity-90 transition duration-150 shadow-lg">Shop Now</a>
+                </nav>
+                <button id="mobile-menu-button" type="button" class="md:hidden p-2 rounded-md text-trail-tan hover:text-accent-orange focus:outline-none focus:ring-2 focus:ring-accent-orange" aria-controls="mobile-menu" aria-expanded="false">
+                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="menu-hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="forge.html" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Forge</a>
+                <a href="lens.html" class="text-trail-tan hover:bg-base-green hover:text-accent-orange block px-3 py-2 rounded-md text-base font-medium transition duration-150">The Lens</a>
+                <a href="trail-talk.html" class="text-accent-orange hover:bg-base-green block px-3 py-2 rounded-md text-base font-medium transition duration-150">Trail Talk</a>
+                <a href="trail-talk.html#kids" class="text-accent-orange hover:bg-base-green block px-3 py-2 rounded-md text-base font-medium transition duration-150">Kids Corner</a>
+                <a href="forge.html" class="bg-accent-orange text-white block px-3 py-2 rounded-md text-base font-medium mt-2 text-center hover:bg-opacity-90 transition duration-150">Shop Now</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 flex-grow">
+        <h1 class="text-4xl font-bold text-center text-base-green mb-10 border-b-2 border-accent-orange pb-2">
+            🧭 Trail Talk: News, Fitness, & Reports
+        </h1>
+        <p class="text-center text-xl text-gray-600 mb-12">
+            The latest outdoor news, essential gear reviews, and tips to keep you and your family active.
+        </p>
+        
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-forge-charcoal mb-6 border-b pb-2">Latest Reports</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 border-t-4 border-base-green">
+                    <span class="text-xs font-semibold text-accent-orange uppercase">National Park Update</span>
+                    <h3 class="text-xl font-bold mt-2 text-forge-charcoal">New Permit System for Yosemite's Half Dome</h3>
+                    <p class="mt-3 text-gray-700 text-sm">A comprehensive review of the new lottery system for Half Dome cables. Includes tips on the best months to apply, and essential gear you'll need.</p>
+                    <a href="#" class="mt-4 inline-flex items-center text-base-green font-medium text-sm hover:text-accent-orange">
+                        Read Full Report &rarr;
+                    </a>
+                </article>
+
+                <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300">
+                    <span class="text-xs font-semibold text-accent-orange uppercase">Gear Review & Affiliate</span>
+                    <h3 class="text-xl font-bold mt-2 text-forge-charcoal">Review: The Lightweight Tent of 2025</h3>
+                    <p class="mt-3 text-gray-700 text-sm">We field-tested the new 'Summit Seeker 2-Person' tent. Find out if the weight savings are worth the premium price.</p>
+                    <p class="mt-3 text-xs text-gray-500">
+                        *This review contains affiliate links. As an Amazon Associate, we earn from qualifying purchases.
+                    </p>
+                    <a href="#" class="mt-4 inline-flex items-center text-base-green font-medium text-sm hover:text-accent-orange">
+                        Check Price on Amazon &rarr;
+                    </a>
+                </article>
+
+                <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300">
+                    <span class="text-xs font-semibold text-accent-orange uppercase">Fitness Tip</span>
+                    <h3 class="text-xl font-bold mt-2 text-forge-charcoal">Trail Fitness: Pre-Hike Mobility Routine</h3>
+                    <p class="mt-3 text-gray-700 text-sm">5 simple stretches to prevent injury and boost endurance before hitting the trail. Essential for all fitness levels.</p>
+                    <a href="#" class="mt-4 inline-flex items-center text-base-green font-medium text-sm hover:text-accent-orange">
+                        See the Routine &rarr;
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="fitness" class="py-16 px-4 sm:px-6 lg:px-8 bg-base-green text-trail-tan rounded-xl my-8 shadow-2xl">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-accent-orange mb-10 border-b-2 border-trail-tan pb-2">
+                    💪 Fitness Basecamp: Stay Trail Ready
+                </h2>
+                <div class="space-y-6">
+                    <div class="bg-forge-charcoal p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-trail-tan">Tip #1: The Rucksack Routine</h3>
+                        <p class="mt-2 text-gray-300">
+                            Train specifically for hiking by doing weighted step-ups. Load your backpack with 20-30 lbs (or a child!) and use a sturdy chair or bench. This builds the exact strength you need for vertical trails.
+                        </p>
+                    </div>
+                    <div class="bg-forge-charcoal p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-trail-tan">Tip #2: Ankle Stability for Uneven Trails</h3>
+                        <p class="mt-2 text-gray-300">
+                            Perform single-leg balance drills every morning while brushing your teeth. This simple practice significantly improves ankle stability, preventing twists and sprains on rocky terrain.
+                        </p>
+                    </div>
+                </div>
+                <div class="text-center mt-10">
+                    <a href="#" class="px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-forge-charcoal bg-accent-orange hover:bg-opacity-90 transition duration-200">
+                        See All Fitness Guides
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="kids" class="py-16 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-base-green mb-10 border-b-2 border-accent-orange pb-2">
+                🖍️ Basecamp Kids Corner: Free Activities
+            </h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-2xl border-t-4 border-base-green">
+                <h3 class="text-2xl font-bold text-base-green text-center">
+                    Free Printable: The Redwood Forest Maze!
+                </h3>
+                <p class="mt-4 text-center text-gray-700">
+                    Keep the little explorers busy on long drives or rainy basecamp days. Download our free, outdoor-themed activity sheets instantly!
+                </p>
+                <div class="mt-6 flex justify-center">
+                    <img src="https://placehold.co/300x300/1E392A/D97706?text=KIDS+MAZE+PREVIEW" alt="Kids Maze Preview" class="rounded-lg shadow-lg border-2 border-accent-orange">
+                </div>
+                <div class="mt-8 text-center">
+                    <input type="email" placeholder="Enter your email for the free download" class="w-full max-w-sm px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-accent-orange focus:border-accent-orange" required>
+                    <button onclick="simulateDownload()" class="mt-2 sm:mt-0 px-6 py-3 bg-accent-orange text-white font-semibold rounded-r-lg hover:bg-opacity-90 transition duration-200 shadow-md">
+                        Get the Maze Now!
+                    </button>
+                    <p id="download-message" class="mt-4 text-sm text-base-green font-medium hidden">
+                        </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-forge-charcoal text-trail-tan p-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="font-bold text-lg mb-2">Basecamp Creative Co.</p>
+            <p class="text-sm mb-4">A Family Adventure: Blacksmithing, Photography, & Community.</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="forge.html" class="hover:text-accent-orange transition duration-150">Forge Shop</a>
+                <a href="lens.html" class="hover:text-accent-orange transition duration-150">Gallery</a>
+                <a href="trail-talk.html" class="hover:text-accent-orange transition duration-150">Blog</a>
+                <a href="#" class="hover:text-accent-orange transition duration-150">Contact</a>
+            </div>
+            <p class="mt-6 text-xs text-gray-500">© 2025 Basecamp Creative Co. | Forged with passion.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        // (Menu toggle logic)
+        // ... (Include the full JavaScript logic from the index.html file) ...
+
+        // Simulate Free Download and Email Capture (Lead Magnet)
+        function simulateDownload() {
+            const emailInput = document.querySelector('#kids input[type="email"]');
+            const downloadMessage = document.getElementById('download-message');
+            
+            if (emailInput.value && emailInput.value.includes('@') && emailInput.value.includes('.')) {
+                downloadMessage.textContent = `Success! The Redwood Maze is on its way to ${emailInput.value}. Check your spam folder!`;
+                downloadMessage.classList.remove('hidden');
+                downloadMessage.classList.remove('text-red-600');
+                downloadMessage.classList.add('text-base-green');
+                emailInput.value = '';
+            } else {
+                downloadMessage.textContent = 'Oops! Please enter a valid email address to get the free maze.';
+                downloadMessage.classList.remove('hidden');
+                downloadMessage.classList.remove('text-base-green');
+                downloadMessage.classList.add('text-red-600');
+                setTimeout(() => {
+                    downloadMessage.classList.add('hidden');
+                    downloadMessage.classList.remove('text-red-600');
+                }, 3000);
+            }
+        }
+    </script>
+
+</body>
+</html>
